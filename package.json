@@ -1,0 +1,40 @@
+{
+	"name": "tbrs-todo",
+	"module": "./src/server.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "bun run --watch src/server.ts",
+		"db:push": "bunx drizzle-kit push",
+		"db:studio": "bunx drizzle-kit studio"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/cookie": "^1.0.0",
+		"@types/cookie-parser": "^1.4.10",
+		"@types/express": "^5.0.6",
+		"@types/multer": "^2.0.0",
+		"@types/pg": "^8.16.0",
+		"drizzle-kit": "^0.31.8"
+	},
+	"peerDependencies": {
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"@oslojs/crypto": "^1.0.1",
+		"@oslojs/encoding": "^1.1.0",
+		"@types/chalk": "^2.2.4",
+		"ali-oss": "^6.23.0",
+		"argon2": "^0.44.0",
+		"chalk": "^5.6.2",
+		"cloudinary": "^2.8.0",
+		"cookie": "^1.1.1",
+		"cookie-parser": "^1.4.7",
+		"drizzle-orm": "^0.45.1",
+		"express": "^5.2.1",
+		"lucia": "^3.2.2",
+		"multer": "^2.0.2",
+		"nanoid": "^5.1.6",
+		"pg": "^8.16.3"
+	}
+}

@@ -1,0 +1,13 @@
+export const ENV = {
+	PORT: process.env.PORT,
+	DATABASE_URL: process.env.DATABASE_URL,
+
+	// ALI-OSS
+	ACCESS_KEY_ID: process.env.ACCESS_KEY_ID,
+	ACCESS_KEY_SECRET: process.env.ACCESS_KEY_SECRET,
+
+	// Cloudinary
+	CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+	CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+	CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+}
