@@ -5,11 +5,6 @@ export default defineConfig({
 	schema: './src/db/schema.ts',
 	out: './drizzle',
 	dbCredentials: {
-		host: 'localhost',
-		port: 5432,
-		user: 'tbrs',
-		password: 'tbrs',
-		database: 'tbrs_db',
-		ssl: false,
+		url: process.env.DATABASE_URL!,
 	},
 })

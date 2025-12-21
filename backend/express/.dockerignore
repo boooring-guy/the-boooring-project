@@ -1,0 +1,16 @@
+node_modules
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+README.md
+dist
+# drizzle (uncommented to allow migrations in build)
+# drizzle
+out
+build
+*.log
+.DS_Store
+.vscode
+.cursor

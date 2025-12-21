@@ -5,15 +5,17 @@ import { ENV } from './env'
 import chalk from 'chalk'
 import authRouter from './routes/auth.route'
 import todoRouter from './routes/todo.route'
+import { loggerMiddleware } from './middleware/logger.middleware'
 
 const app = express()
-const port = ENV.PORT || 3000
+const port = Number(ENV.PORT) || 9000
 
 // necssary middleware
 app.use(express.json())
 app.use(cookieParser())
+app.use(loggerMiddleware) // log all requests
 
-// catch all rotues
+// catch all routes
 app.get('/', (req, res) => {
 	res.send('Hello World2')
 })
@@ -30,7 +32,12 @@ app.get('/db-status', async (req, res) => {
 		res.status(500).send('DB Status')
 	}
 })
-
+app.use('/api/health', (req, res) => {
+	res.json({
+		status: 'success',
+		message: 'Server is running',
+	})
+})
 app.use('/api/auth', authRouter)
 app.use('/api/todos', todoRouter)
 

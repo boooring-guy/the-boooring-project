@@ -1,0 +1,40 @@
+name: do-to
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '9000:9000'
+    env_file: .env.production
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - do-to-network
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: tbrs
+      POSTGRES_PASSWORD: tbrs
+      POSTGRES_DB: tbrs_db
+    ports:
+      - '5433:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U tbrs -d tbrs_db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - do-to-network
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+networks:
+  do-to-network:
+    driver: bridge
+
+volumes:
+  db-data: # persistent storage for the database
