@@ -6,11 +6,19 @@ import chalk from 'chalk'
 import authRouter from './routes/auth.route'
 import todoRouter from './routes/todo.route'
 import { loggerMiddleware } from './middleware/logger.middleware'
+import cors from 'cors'
 
 const app = express()
 const port = Number(ENV.PORT) || 9000
 
 // necssary middleware
+app.use(
+	cors({
+		origin: ENV.CORS_ALLOWED_ORIGINS,
+		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+		credentials: true,
+	})
+)
 app.use(express.json())
 app.use(cookieParser())
 app.use(loggerMiddleware) // log all requests

@@ -22,6 +22,14 @@ export const registerHandler = catchAsync(
 				.json({ message: 'Email and password are required' })
 		}
 
+		// guard duplicate emails
+		const user = await db.query.UserTable.findFirst({
+			where: eq(UserTable.email, email),
+		})
+		if (user) {
+			return res.status(400).json({ message: 'User already exists' })
+		}
+
 		// genreate a randomeUSer id
 		const userId = generateIdFromEntropySize(10)
 		const passwordHash = await hash(password)
