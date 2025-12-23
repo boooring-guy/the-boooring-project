@@ -5,4 +5,7 @@ export const QUERY_KEYS = {
 		login: 'auth/login',
 	},
 	session: 'session',
+	todos: {
+		todos: 'TODOS',
+	},
 } as const

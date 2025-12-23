@@ -12,6 +12,7 @@
 		"@base-ui/react": "^1.0.0",
 		"@dicebear/collection": "^9.2.4",
 		"@dicebear/core": "^9.2.4",
+		"@faker-js/faker": "^10.1.0",
 		"@hookform/resolvers": "^5.2.2",
 		"@hugeicons/core-free-icons": "^3.1.0",
 		"@hugeicons/react": "^1.1.3",

@@ -98,16 +98,18 @@ export const statusUpdateHandler = catchAsync(
 			})
 		}
 
-		await db
+		const updatedTodo = await db
 			.update(TodoTable)
 			.set({
 				status,
 				updatedAt: new Date(),
 			})
 			.where(and(eq(TodoTable.id, id), eq(TodoTable.userId, user.id)))
+			.returning()
 
 		return res.status(200).json({
 			message: 'Todo status updated successfully',
+			todo: updatedTodo,
 		})
 	}
 )

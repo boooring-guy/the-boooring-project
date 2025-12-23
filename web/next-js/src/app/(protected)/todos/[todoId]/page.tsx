@@ -5,6 +5,7 @@ const TodoIdPage = async ({
 }: {
 	params: Promise<{ todoId: string }>
 }) => {
+	// test code
 	const { todoId } = await params
 	return <div>{todoId}</div>
 }

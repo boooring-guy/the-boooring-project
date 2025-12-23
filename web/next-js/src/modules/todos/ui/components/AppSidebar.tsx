@@ -1,15 +1,12 @@
 'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
 	SidebarGroup,
-	SidebarGroupLabel,
 	SidebarHeader,
-	SidebarMenuSub,
-	SidebarMenuSubItem,
-	SidebarSeparator,
+	SidebarRail,
 	SidebarTrigger,
 	useSidebar,
 } from '@/components/ui/sidebar'
@@ -23,18 +20,30 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import {
 	ChevronDown,
 	ChevronLeft,
-	ChevronUp,
 	Note02Icon,
+	Plus,
 	Task01FreeIcons,
-	TouchpadOff,
 } from '@hugeicons/core-free-icons'
-import { buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import TodoSidebarItem from './TodoSidebarItem'
+import { useCreateTodo, useGetAllTodos } from '../../hooks/use-todos'
+import { toast } from 'sonner'
 
 const AppSidebar = () => {
+	const { data, isLoading, isError, error } = useGetAllTodos()
 	const { state } = useSidebar()
-	const [todosOpen, setTodosOpen] = React.useState<boolean>(false)
+	const [todosOpen, setTodosOpen] = React.useState<boolean>(true)
+	const createTodoMutaiton = useCreateTodo()
+	const createTodo = () => {
+		toast.promise(createTodoMutaiton.mutateAsync(), {
+			loading: 'Creating todo...',
+			success: 'Todo created successfully',
+			error: 'Failed to create todo',
+		})
+	}
+	if (isLoading) return <div>Loading...</div>
+	if (isError) return <div>Error: {error.message}</div>
 
 	return (
 		<Sidebar
@@ -49,9 +58,12 @@ const AppSidebar = () => {
 							<h2 className='font-bold text-xl'>Do-To</h2>
 						)}
 					</div>
-					<SidebarTrigger>
-						<HugeiconsIcon icon={Note02Icon} />
-					</SidebarTrigger>
+					<Button
+						variant={'ghost'}
+						onClick={createTodo}
+					>
+						<HugeiconsIcon icon={Plus} />
+					</Button>
 				</SidebarHeader>
 
 				<SidebarContent>
@@ -77,15 +89,13 @@ const AppSidebar = () => {
 								<HugeiconsIcon icon={todosOpen ? ChevronDown : ChevronLeft} />
 							</CollapsibleTrigger>
 							<CollapsibleContent>
-								<TodoSidebarItem
-									item={{
-										id: '1',
-										title: 'Todo 1',
-										userId: '1',
-										createdAt: new Date(),
-										updatedAt: new Date(),
-									}}
-								/>
+								{data?.map((todo) => (
+									<TodoSidebarItem
+										key={todo.id}
+										item={todo}
+									/>
+								))}
+								{/* {JSON.stringify(data, null, 2)} */}
 							</CollapsibleContent>
 						</Collapsible>
 					</SidebarGroup>
@@ -99,6 +109,7 @@ const AppSidebar = () => {
 				{' '}
 				Account Details with Dropdown
 			</SidebarFooter>
+			<SidebarRail />
 		</Sidebar>
 	)
 }

@@ -1,5 +1,5 @@
 'use client'
-import { useAuth } from '@/hooks/use-auth'
+import { useAuth } from '@/hooks/use-session'
 import React from 'react'
 
 const DashboardPage = () => {

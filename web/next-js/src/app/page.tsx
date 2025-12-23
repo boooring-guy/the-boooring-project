@@ -1,12 +1,19 @@
+'use client'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
-import { useAuth } from '@/hooks/use-auth'
+import { useAuth } from '@/hooks/use-session'
 import Link from 'next/link'
 import React from 'react'
 
+import { useCreateTodo } from '@/modules/todos/hooks/use-todos'
+import { usePrefetchTodos } from '@/modules/todos/queries/prefetch'
 const DashboardPage = () => {
 	const { isLoading, isError } = useAuth()
+	const mutation = useCreateTodo()
+
+	usePrefetchTodos()
+
 	if (isLoading) return <div>Loading...</div>
 	if (isError) return <div>Error loading session</div>
 	return (
@@ -18,6 +25,9 @@ const DashboardPage = () => {
 					One to-do concept with multiple programs
 				</p>
 			</div>
+			<Button onClick={() => mutation.mutate()}>
+				{mutation.isPending ? 'Loading' : 'Create Todo'}
+			</Button>
 			<ButtonGroup>
 				<Link href='/todos'>
 					<Button>Get Started</Button>
